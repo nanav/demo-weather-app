@@ -1,0 +1,171 @@
+plugins {
+    id "com.banner.versions.ribbonizer" version "1.2.5"
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion(compileSdk)
+
+    defaultConfig {
+        applicationId "com.nanav.weather"
+        minSdkVersion(minSdk)
+        targetSdkVersion(targetSdk)
+
+        versionName "0.0.1"
+        manifestPlaceholders = [appName: "DemoWeather"]
+
+        multiDexEnabled false
+
+        buildConfigField "int", "TEST_VERSION", "27"
+        buildConfigField "boolean", "DEV", "false"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
+    }
+
+    viewBinding.enabled = true
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = defaultConfig.manifestPlaceholders["appName"] + "_" + variant.flavorName + "_" + variant.buildType.name + ".apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility(jvmCompileTarget)
+        targetCompatibility(jvmCompileTarget)
+    }
+
+    kotlinOptions {
+        jvmTarget = jvmCompileTarget
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("release.jks")
+            storePassword "1234"
+            keyAlias "weather"
+            keyPassword "1234"
+        }
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
+
+    buildTypes {
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            manifestPlaceholders = [appNameSuffix: ""]
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            manifestPlaceholders = [appNameSuffix: " - Dev"]
+            applicationIdSuffix ".debug"
+            versionNameSuffix "dev"
+            signingConfig signingConfigs.debug
+
+            buildConfigField "boolean", "DEV", "true"
+        }
+
+        qa {
+            matchingFallbacks = ['debug']
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+            manifestPlaceholders = [appNameSuffix: " - QA"]
+            applicationIdSuffix ".qa"
+            versionNameSuffix "qa"
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions defaultDimen
+
+    productFlavors {
+        standard {
+            dimension defaultDimen
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            testLogging {
+                events "passed", "skipped", "failed", "standardOut", "standardError"
+                outputs.upToDateWhen { false }
+                showStandardStreams = true
+            }
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    sourceSets {
+        test {
+            java.srcDirs += "$projectDir/src/sharedTest/java"
+        }
+
+        androidTest {
+            java.srcDirs += "$projectDir/src/sharedTest/java"
+        }
+    }
+
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.guava:guava:22.0'
+    }
+}
+
+ribbonizer {
+    builder { variant, File iconFile ->
+        return defaultRibbonFilter(variant, iconFile)
+    }
+}
+
+apply from: '../testing.gradle'
+
+internalProject('baseapp')
+
+internalLib(rxbinding)
+internalLib(appcompat)
+internalLib(design)
+internalLib(recyclerview)
+internalLib(retrofit)
+internalLib(constraintlayout)
+internalLib(glide)
+internalLib(rxjava)
+
+test(unittest.junit)
+test(unittest.mockito)
+test(unittest.robolectric)
+test(unittest.commons)
+test(unittest.androidxTest)
+
+androidTest(uitest.rules)
+androidTest(uitest.espresso)
+androidTest(uitest.junit)
+androidTest(uitest.mockito)
+
+dependencies {
+}

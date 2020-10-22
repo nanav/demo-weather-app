@@ -1,0 +1,6 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nanav.weather.baseapp" >
+    <application>
+        <activity android:name="com.nanav.weather.ui.WebviewActivity" />
+    </application>
+</manifest>

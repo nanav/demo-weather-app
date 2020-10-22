@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion(compileSdk)
+
+    defaultConfig {
+        minSdkVersion(minSdk)
+        targetSdkVersion(targetSdk)
+    }
+
+    viewBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility(jvmCompileTarget)
+        targetCompatibility(jvmCompileTarget)
+    }
+
+    kotlinOptions {
+        jvmTarget = jvmCompileTarget
+    }
+
+    buildTypes {
+        debug {}
+        release {}
+    }
+
+    flavorDimensions defaultDimen
+
+    productFlavors {
+        standard {
+            dimension defaultDimen
+            buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/\""
+            buildConfigField "String", "API_KEY", "\"828971f619b9ba9b1632c23dff01bec5\""
+            buildConfigField "String", "API_VERSION", "\"2.5\""
+        }
+    }
+}
+
+internalLib(okhttp)
+internalLib(retrofit)
+exposedLib(kotlin)
+exposedLib(rxjava)
+exposedLib(recyclerview)
+exposedLib(timber)
+exposedLib(jodatime)
+exposedLib(glide)
+exposedLib(koin)
+
+dependencies {
+
+}

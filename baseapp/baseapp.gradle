@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion(compileSdk)
+
+    defaultConfig {
+        minSdkVersion(minSdk)
+        targetSdkVersion(targetSdk)
+    }
+
+    viewBinding.enabled = true
+
+    compileOptions {
+        sourceCompatibility(jvmCompileTarget)
+        targetCompatibility(jvmCompileTarget)
+    }
+
+    kotlinOptions {
+        jvmTarget = jvmCompileTarget
+    }
+
+    buildTypes {
+        debug {}
+        release {}
+    }
+
+    flavorDimensions defaultDimen
+
+    productFlavors {
+        standard {
+            dimension defaultDimen
+        }
+    }
+}
+
+exposedProject("data")
+exposedLib(appcompat)
+
+internalLib(design)
+internalLib(constraintlayout)

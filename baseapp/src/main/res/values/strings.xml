@@ -1,0 +1,7 @@
+<resources>
+    <string name="generic_close">Close</string>
+    <string name="generic_cancel">Cancel</string>
+    <string name="generic_help">Help</string>
+    <string name="generic_undo">Undo</string>
+    <string name="generic_dismiss">Dismiss</string>
+</resources>

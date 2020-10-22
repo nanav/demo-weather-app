@@ -1,0 +1,15 @@
+task assembly {
+    dependsOn ('assembleDebug', 'assembleRelease')
+}
+task tests {
+    dependsOn ('testStandardDebugUnitTest', 'testStandardReleaseUnitTest')
+    finalizedBy assembly
+}
+task lints {
+    dependsOn ('lintStandardRelease')
+    finalizedBy tests
+}
+task testBuild {
+    dependsOn clean
+    finalizedBy lints
+}

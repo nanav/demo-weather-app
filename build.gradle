@@ -1,0 +1,213 @@
+buildscript {
+    ext.kotlin_version = '1.3.61'
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+
+    configurations.all {
+        resolutionStrategy {
+            //TODO temporary remove when libraries are updated
+        }
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+
+    ext {
+        jvmCompileTarget = JavaVersion.VERSION_1_8
+        targetSdk = 29
+        minSdk = 24
+        compileSdk = 29
+        defaultDimen = "default"
+    }
+
+    //Check https://developer.android.com/jetpack/androidx/versions and https://raybritton.co.uk/libraries.html for versions
+    def constraintDev = "2.0.0-beta4"
+    def activityStable = "1.0.0"
+    def annotationsStable = "1.1.0"
+    def appcompatStable = "1.1.0"
+    def cardviewStable = "1.0.0"
+    def materialStable = "1.0.0"
+    def recyclerStable = "1.1.0"
+
+    def okhttpVer = '4.4.0' //Note that the service must support TLS v1.2 and up, if not change the version to 3.12.X
+    def retrofitVer = '2.7.2'
+    def mockitoVer = '3.2.4'
+
+    def rxBindingVer = '2.2.0'
+    def glideVer = '4.10.0'
+
+    def espressoVer = '3.1.0'
+    def junitVer = '4.13'
+
+    def koinVer = '2.1.1'
+
+    ext {
+        constraintlayout = ["androidx.constraintlayout:constraintlayout:$constraintDev"]
+        appcompat = ["androidx.appcompat:appcompat:$appcompatStable"]
+        cardview = ["androidx.cardview:cardview:$cardviewStable"]
+        androidannotations = ["androidx.annotation:annotation:$annotationsStable"]
+        recyclerview = ["androidx.recyclerview:recyclerview:$recyclerStable"]
+        activity = ["androidx.activity:activity:$activityStable"]
+        design = ["com.google.android.material:material:$materialStable"]
+
+        //dependency injection
+        koin = ["org.koin:koin-android:$koinVer",
+                 "org.koin:koin-androidx-viewmodel:$koinVer"]
+
+        //kotlin
+        ktlintRules = ['com.github.shyiko:ktlint:0.10.0']
+        kotlin = ["org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"]
+
+        //logging
+        timber = ['com.jakewharton.timber:timber:4.7.1']
+
+        //networking
+        okhttp = ["com.squareup.okhttp3:okhttp:$okhttpVer",
+                  "com.squareup.okhttp3:logging-interceptor:$okhttpVer"]
+        retrofit = ["com.squareup.retrofit2:retrofit:$retrofitVer",
+                    "com.squareup.retrofit2:converter-gson:$retrofitVer",
+                    "com.squareup.retrofit2:adapter-rxjava2:$retrofitVer"]
+
+        //image loading
+        glide = ["com.github.bumptech.glide:glide:$glideVer",
+                 "com.github.bumptech.glide:okhttp3-integration:$glideVer",
+                 "Acom.github.bumptech.glide:compiler:$glideVer"]
+
+        //rx
+        rxjava = ["io.reactivex.rxjava2:rxjava:2.2.18",
+                  "io.reactivex.rxjava2:rxandroid:2.1.1",
+                  "io.reactivex.rxjava2:rxkotlin:2.4.0"]
+        rxbinding = ["com.jakewharton.rxbinding2:rxbinding-kotlin:$rxBindingVer",
+                     "com.jakewharton.rxbinding2:rxbinding-design-kotlin:$rxBindingVer",
+                     "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxBindingVer",
+                     "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxBindingVer",
+                     "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxBindingVer"]
+
+        //date/time
+        jodatime = ['net.danlew:android.joda:2.10.3']
+
+        unittest = {}
+        unittest.ext {
+            robolectric = ['org.robolectric:robolectric:4.3.1']
+            mockito = ["org.mockito:mockito-core:$mockitoVer"]
+            commons = ['org.apache.commons:commons-lang3:3.7']
+            androidxTest = ['androidx.test:core:1.2.0',
+                            'androidx.test:runner:1.2.0',
+                            'androidx.test:rules:1.2.0',
+                            'androidx.test.ext:junit:1.1.1']
+        }
+
+        uitest = {}
+        uitest.ext {
+            junit = ["junit:junit:$junitVer"]
+            rules = ['androidx.test:rules:1.1.0']
+            espresso = ["androidx.test.espresso:espresso-core:$espressoVer",
+                        "androidx.test.espresso:espresso-contrib:$espressoVer"]
+            mockito = ["org.mockito:mockito-core:$mockitoVer"]
+            }
+    }
+
+    ext.internalProject = { code ->
+        dependencies {
+            implementation project(":$code")
+        }
+    }
+
+    ext.exposedProject = { code ->
+        dependencies {
+            api project(":$code")
+        }
+    }
+
+    ext.internalLib = { codes ->
+        def map = new HashMap<String, String>();
+        map.put("", "implementation")
+        map.put("A", "kapt")
+        map.put("C", "compileOnly")
+        map.put("D", "debugImplementation")
+        map.put("Q", "qaImplementation")
+        map.put("R", "releaseImplementation")
+        addLib(map, codes)
+    }
+
+    ext.exposedLib = { codes ->
+        def map = new HashMap<String, String>();
+        map.put("", "api")
+        map.put("A", "kapt")
+        map.put("C", "compileOnly")
+        map.put("D", "debugApi")
+        map.put("Q", "qaApi")
+        map.put("R", "releaseApi")
+        addLib(map, codes)
+    }
+
+    ext.test = { codes ->
+        def map = new HashMap<String, String>();
+        map.put("", "testImplementation")
+        map.put("A", "kaptTest")
+        map.put("D", "debugTestImplementation")
+        map.put("Q", "qaTestImplementation")
+        map.put("R", "releaseTestImplementation")
+        addLib(map, codes)
+    }
+
+    ext.androidTest = { codes ->
+        def map = new HashMap<String, String>();
+        map.put("", "androidTestImplementation")
+        map.put("A", "kaptTest")
+        map.put("D", "debugAndroidTestImplementation")
+        map.put("Q", "qaAndroidTestImplementation")
+        map.put("R", "releaseAndroidTestImplementation")
+        addLib(map, codes)
+    }
+
+    /**
+     *
+     * This function dynamically invokes the methods (api, implementation, etc)
+     * to add dependencies
+     *
+     * mapping should be a map of code to method, e.g.
+     * R -> releaseImplementation
+     * A -> kapt (A for annotation processor)
+     *
+     * libraries should be a list of dependencies with codes at the beginning of the lib
+     * if it's not using the default method (from the mapping with an empty key)
+     *
+     */
+    ext.addLib = { mapping, libraries ->
+        dependencies {
+            libraries.each {
+                if (it.getChars()[0].isUpperCase()) {
+                    def dep = [it.substring(1)]
+                    def code = it.substring(0, 1)
+                    def method = mapping[code]
+                    "$method"(dep)
+                    //* this is the same as method(dep)
+                    //* dep is an array of parameters for the function
+                    //* method is the name of the function
+                    //* putting a method in quotes with a dollar at the front and brackets after the
+                    //quotes causes the method to be invoked in groovy
+                } else {
+                    def dep = [it]
+                    def method = mapping['']
+                    "$method"(dep)
+                }
+            }
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
