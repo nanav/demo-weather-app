@@ -52,7 +52,6 @@ allprojects {
     ext {
         constraintlayout = ["androidx.constraintlayout:constraintlayout:$constraintDev"]
         appcompat = ["androidx.appcompat:appcompat:$appcompatStable"]
-        cardview = ["androidx.cardview:cardview:$cardviewStable"]
         androidannotations = ["androidx.annotation:annotation:$annotationsStable"]
         recyclerview = ["androidx.recyclerview:recyclerview:$recyclerStable"]
         activity = ["androidx.activity:activity:$activityStable"]
@@ -95,6 +94,11 @@ allprojects {
                             'androidx.test:runner:1.2.0',
                             'androidx.test:rules:1.2.0',
                             'androidx.test.ext:junit:1.1.1']
+        }
+
+        uitest = {}
+        uitest.ext {
+            junit = ["junit:junit:$junitVer"]
         }
     }
 

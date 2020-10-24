@@ -45,7 +45,6 @@ exposedLib(kotlin)
 exposedLib(rxjava)
 exposedLib(recyclerview)
 exposedLib(timber)
-exposedLib(jodatime)
 exposedLib(koin)
 
 dependencies {
