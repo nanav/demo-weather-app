@@ -7,7 +7,7 @@
     <string name="landing_city_title">City:</string>
     <string name="landing_temp_title">Temperature:</string>
     <string name="landing_hum_title">Humidity:</string>
-    <string name="landing_temp_value" formatted="false">%.2f°C (feels like %.2f°C)</string>
+    <string name="landing_temp_value" formatted="false">%.1f°C (feels like %.1f°C)</string>
     <string name="landing_hum_value">%d %%</string>
     <string name="landing_title">Search any city\'s weather below</string>
 </resources>
