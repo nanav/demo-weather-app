@@ -47,25 +47,12 @@ android {
         jvmTarget = jvmCompileTarget
     }
 
-    signingConfigs {
-        release {
-            storeFile file("release.jks")
-            storePassword "1234"
-            keyAlias "weather"
-            keyPassword "1234"
-        }
-        debug {
-            storeFile file("debug.keystore")
-        }
-    }
-
     buildTypes {
         release {
             debuggable false
             minifyEnabled true
             shrinkResources true
             manifestPlaceholders = [appNameSuffix: ""]
-            signingConfig signingConfigs.release
         }
 
         debug {
@@ -75,7 +62,6 @@ android {
             manifestPlaceholders = [appNameSuffix: " - Dev"]
             applicationIdSuffix ".debug"
             versionNameSuffix "dev"
-            signingConfig signingConfigs.debug
 
             buildConfigField "boolean", "DEV", "true"
         }
@@ -88,7 +74,6 @@ android {
             manifestPlaceholders = [appNameSuffix: " - QA"]
             applicationIdSuffix ".qa"
             versionNameSuffix "qa"
-            signingConfig signingConfigs.debug
         }
     }
 
