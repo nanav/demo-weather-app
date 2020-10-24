@@ -46,7 +46,6 @@ exposedLib(rxjava)
 exposedLib(recyclerview)
 exposedLib(timber)
 exposedLib(jodatime)
-exposedLib(glide)
 exposedLib(koin)
 
 dependencies {

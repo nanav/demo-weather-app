@@ -8,12 +8,24 @@
     android:background="@color/window_background"
     tools:context=".ui.landing.LandingActivity">
 
+    <TextView
+        android:id="@+id/landing_title"
+        style="@style/Landing.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_huge"
+        android:layout_marginEnd="@dimen/margin_large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/landing_title"/>
+
     <EditText
         android:id="@+id/landing_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginTop="@dimen/margin_huge"
+        android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_large"
         android:background="@color/color_white"
         android:hint="@string/landing_input_hint"
@@ -22,7 +34,7 @@
         android:minHeight="@dimen/search_bar_height"
         android:padding="@dimen/padding_medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/landing_title" />
 
     <TextView
         android:id="@+id/landing_city_title"

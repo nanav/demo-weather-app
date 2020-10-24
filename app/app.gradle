@@ -153,7 +153,6 @@ internalLib(design)
 internalLib(recyclerview)
 internalLib(retrofit)
 internalLib(constraintlayout)
-internalLib(glide)
 internalLib(rxjava)
 
 test(unittest.junit)

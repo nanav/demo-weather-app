@@ -39,15 +39,18 @@ class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBindin
 
     private fun setData(weather: Weather) {
         hideKeyboard()
+
         showProgress(false)
+
         layout.landingCity.text = weather.city
-        layout.landingTemp.text = String.format(
-            getString(R.string.landing_temp_value),
-            weather.weatherMain.temp.toCelsius()
-        )
         layout.landingHumidity.text = String.format(
             getString(R.string.landing_hum_value),
             weather.weatherMain.humidity.toInt()
+        )
+        layout.landingTemp.text = String.format(
+            getString(R.string.landing_temp_value),
+            weather.weatherMain.temp.toCelsius(),
+            weather.weatherMain.feelsLike.toCelsius()
         )
     }
 

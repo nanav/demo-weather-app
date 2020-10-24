@@ -36,7 +36,6 @@ allprojects {
     def activityStable = "1.0.0"
     def annotationsStable = "1.1.0"
     def appcompatStable = "1.1.0"
-    def cardviewStable = "1.0.0"
     def materialStable = "1.0.0"
     def recyclerStable = "1.1.0"
 
@@ -45,9 +44,7 @@ allprojects {
     def mockitoVer = '3.2.4'
 
     def rxBindingVer = '2.2.0'
-    def glideVer = '4.10.0'
 
-    def espressoVer = '3.1.0'
     def junitVer = '4.13'
 
     def koinVer = '2.1.1'
@@ -79,11 +76,6 @@ allprojects {
                     "com.squareup.retrofit2:converter-gson:$retrofitVer",
                     "com.squareup.retrofit2:adapter-rxjava2:$retrofitVer"]
 
-        //image loading
-        glide = ["com.github.bumptech.glide:glide:$glideVer",
-                 "com.github.bumptech.glide:okhttp3-integration:$glideVer",
-                 "Acom.github.bumptech.glide:compiler:$glideVer"]
-
         //rx
         rxjava = ["io.reactivex.rxjava2:rxjava:2.2.18",
                   "io.reactivex.rxjava2:rxandroid:2.1.1",
@@ -93,9 +85,6 @@ allprojects {
                      "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:$rxBindingVer",
                      "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:$rxBindingVer",
                      "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxBindingVer"]
-
-        //date/time
-        jodatime = ['net.danlew:android.joda:2.10.3']
 
         unittest = {}
         unittest.ext {
@@ -107,15 +96,6 @@ allprojects {
                             'androidx.test:rules:1.2.0',
                             'androidx.test.ext:junit:1.1.1']
         }
-
-        uitest = {}
-        uitest.ext {
-            junit = ["junit:junit:$junitVer"]
-            rules = ['androidx.test:rules:1.1.0']
-            espresso = ["androidx.test.espresso:espresso-core:$espressoVer",
-                        "androidx.test.espresso:espresso-contrib:$espressoVer"]
-            mockito = ["org.mockito:mockito-core:$mockitoVer"]
-            }
     }
 
     ext.internalProject = { code ->

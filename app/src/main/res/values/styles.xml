@@ -11,6 +11,10 @@
 
     <style name="Landing" />
 
+    <style name="Landing.Title" parent="Landing">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
     <style name="Landing.Field" parent="Landing">
         <item name="android:textSize">@dimen/text_medium</item>
         <item name="android:textStyle">bold</item>
