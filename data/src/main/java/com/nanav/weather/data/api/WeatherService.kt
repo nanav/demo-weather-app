@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface WeatherService {
 
-    @GET("data/${BuildConfig.API_VERSION}/weather?q=madrid&appid=${BuildConfig.API_KEY}")
-    fun getWeather(@Query("q") inputCity:String): Single<Weather>
+    @GET("data/${BuildConfig.API_VERSION}/weather?appid=${BuildConfig.API_KEY}")
+    fun getWeather(@Query("q") inputCity: String): Single<Weather>
 
 }

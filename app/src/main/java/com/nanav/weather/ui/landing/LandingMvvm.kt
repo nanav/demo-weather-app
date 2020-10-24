@@ -6,7 +6,6 @@ import com.nanav.weather.data.model.Weather
 interface LandingMvvm {
 
     interface ViewModel : BaseMvvm.ViewModel {
-        fun onCreate()
         fun search(inputCity: String)
     }
 

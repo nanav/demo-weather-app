@@ -13,13 +13,6 @@ class LandingViewModel constructor(private val dataManager: DataManager) : BaseV
 
     val landingDataState = MutableLiveData<LandingDataState>()
 
-    override fun onCreate() {
-        landingDataState.value = LandingDataLoading
-
-        // todo remove me
-        search("Madrid")
-    }
-
     override fun search(inputCity: String) {
         landingDataState.value = LandingDataLoading
 

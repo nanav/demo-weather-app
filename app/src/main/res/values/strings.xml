@@ -1,3 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Weather App</string>
+
+    <!-- Landing -->
+    <string name="landing_search">Search</string>
+    <string name="landing_input_hint">enter city name</string>
+    <string name="landing_city_title">City:</string>
+    <string name="landing_temp_title">Temperature:</string>
+    <string name="landing_hum_title">Humidity:</string>
+    <string name="landing_temp_value">%.2f °C</string>
+    <string name="landing_hum_value">%d %%</string>
 </resources>
