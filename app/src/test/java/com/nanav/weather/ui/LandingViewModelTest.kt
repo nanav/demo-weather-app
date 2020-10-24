@@ -3,13 +3,12 @@ package com.nanav.weather.ui
 
 import androidx.lifecycle.Observer
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.nanav.marveltest.BuildConfig
-import com.nanav.marveltest.data.managers.contract.DataManager
-import com.nanav.marveltest.data.model.MockCharacters
-import com.nanav.marveltest.ui.characters.CharacterListDataState
-import com.nanav.marveltest.ui.characters.CharacterListFlowState
-import com.nanav.marveltest.ui.characters.CharacterListViewModel
-import com.nanav.marveltest.util.RxSchedulersOverrideRule
+import com.nanav.weather.BuildConfig
+import com.nanav.weather.data.managers.contract.DataManager
+import com.nanav.weather.data.model.MockWeather
+import com.nanav.weather.ui.landing.LandingDataState
+import com.nanav.weather.ui.landing.LandingViewModel
+import com.nanav.weather.util.RxSchedulersOverrideRule
 import io.reactivex.Single
 import junit.framework.TestCase.assertEquals
 import org.junit.Before
@@ -36,36 +35,35 @@ class LandingViewModelTest {
     @Mock
     lateinit var dataManager: DataManager
 
-    private lateinit var characterListViewModel: CharacterListViewModel
+    private lateinit var landingViewModel: LandingViewModel
 
     private val throwable: Throwable = Throwable("Something went wrong loading data")
 
     @Mock
-    lateinit var dataObserver: Observer<CharacterListDataState>
+    lateinit var dataObserver: Observer<LandingDataState>
 
-    @Mock
-    lateinit var flowObserver: Observer<CharacterListFlowState>
+    private val SEARCH_INPUT_1 = "madrid"
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
 
-        `when`(dataManager.getCharacters())
-            .thenReturn(Single.just(MockCharacters.ALL_CHARACTERS))
+        `when`(dataManager.getWeather(SEARCH_INPUT_1))
+            .thenReturn(Single.just(MockWeather.WEATHER_MAD))
 
-        characterListViewModel = CharacterListViewModel(dataManager)
+        landingViewModel = LandingViewModel(dataManager)
     }
 
     @Test
-    fun `test 1 Data Load Characters`() {
+    fun `test 1 Data Load`() {
         //GIVEN
-        val argumentCaptor = ArgumentCaptor.forClass(CharacterListDataState::class.java)
-        characterListViewModel.characterListDataState.observeForever(dataObserver)
+        val argumentCaptor = ArgumentCaptor.forClass(LandingDataState::class.java)
+        landingViewModel.landingDataState.observeForever(dataObserver)
 
         //WHEN
-        `when`(dataManager.getCharacters()).thenReturn(Single.just(MockCharacters.ALL_CHARACTERS))
+        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.just(MockWeather.WEATHER_MAD))
 
-        characterListViewModel.onCreate()
+        landingViewModel.search(SEARCH_INPUT_1)
 
         //THEN
 
@@ -76,28 +74,24 @@ class LandingViewModelTest {
         val values = argumentCaptor.allValues
 
         assertEquals(2, values.size)
-        assertEquals(CharacterListDataState.DataLoading::class.java, values[0]::class.java)
-        assertEquals(CharacterListDataState.ListData::class.java, values[1]::class.java)
+        assertEquals(LandingDataState.LandingDataLoading::class.java, values[0]::class.java)
+        assertEquals(LandingDataState.LandingData::class.java, values[1]::class.java)
         assertEquals(
-            MockCharacters.ALL_CHARACTERS,
-            (values[1] as CharacterListDataState.ListData).characters
-        )
-        assertEquals(
-            MockCharacters.ALL_CHARACTERS,
-            (values[1] as CharacterListDataState.ListData).characters
+            MockWeather.WEATHER_MAD,
+            (values[1] as LandingDataState.LandingData).weather
         )
     }
 
     @Test
-    fun `test 2 Error Load Characters`() {
+    fun `test 2 Error Load`() {
         //GIVEN
-        val argumentCaptor = ArgumentCaptor.forClass(CharacterListDataState::class.java)
-        characterListViewModel.characterListDataState.observeForever(dataObserver)
+        val argumentCaptor = ArgumentCaptor.forClass(LandingDataState::class.java)
+        landingViewModel.landingDataState.observeForever(dataObserver)
 
         //WHEN
-        `when`(dataManager.getCharacters()).thenReturn(Single.error(throwable))
+        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.error(throwable))
 
-        characterListViewModel.onCreate()
+        landingViewModel.search(SEARCH_INPUT_1)
 
         //THEN
 
@@ -108,31 +102,7 @@ class LandingViewModelTest {
         val values = argumentCaptor.allValues
 
         assertEquals(2, values.size)
-        assertEquals(CharacterListDataState.DataLoading::class.java, values[0]::class.java)
-        assertEquals(CharacterListDataState.DataError::class.java, values[1]::class.java)
-    }
-
-    @Test
-    fun `test 3 On Character clicked`() {
-        //GIVEN
-        val argumentCaptor = ArgumentCaptor.forClass(CharacterListFlowState::class.java)
-        characterListViewModel.characterListFlowState.observeForever(flowObserver)
-
-        //WHEN
-        characterListViewModel.onCharacterClicked(MockCharacters.JOHN)
-
-        //THEN
-        argumentCaptor.run {
-            verify(flowObserver, times(1)).onChanged(argumentCaptor.capture())
-        }
-
-        val values = argumentCaptor.allValues
-
-        assertEquals(1, values.size)
-        assertEquals(CharacterListFlowState.StartCharacterDetail::class.java, values[0]::class.java)
-        assertEquals(
-            MockCharacters.JOHN.id,
-            (values[0] as CharacterListFlowState.StartCharacterDetail).characterId
-        )
+        assertEquals(LandingDataState.LandingDataLoading::class.java, values[0]::class.java)
+        assertEquals(LandingDataState.LandingDataError::class.java, values[1]::class.java)
     }
 }
