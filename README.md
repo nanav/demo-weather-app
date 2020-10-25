@@ -75,6 +75,6 @@ val DatabaseModule = module {
 
 5- List of favourite locations and their weather. Datamanger should be able fetch this data by calling database and server.
 
-5- Handle connectivy issues by detecting connection changes - see an example of it in any of my projects like https://github.com/nanav/marvel-test
+6- Handle connectivy issues by detecting connection changes - see an example of it in any of my projects like https://github.com/nanav/marvel-test
 
-
+7- Add UI tests with espresso - see an example of it in any of my projects like https://github.com/nanav/marvel-test
