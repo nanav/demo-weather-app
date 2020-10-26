@@ -15,15 +15,28 @@
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
-    <style name="Landing.Field" parent="Landing">
+    <style name="Landing.Button" parent="Landing">
+        <item name="android:background">@color/color_primary_dark</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="Detail"/>
+
+    <style name="Detail.Field" parent="Detail">
         <item name="android:textSize">@dimen/text_medium</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="Landing.Field.Value" parent="Landing.Field">
+    <style name="Detail.Field.Value" parent="Detail.Field">
         <item name="android:textStyle">normal</item>
         <item name="android:paddingStart">@dimen/padding_medium</item>
         <item name="android:textAllCaps">false</item>
+    </style>
+    <style name="Detail.Error" parent="Detail">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_accent</item>
+        <item name="android:textSize">@dimen/text_medium</item>
     </style>
 </resources>

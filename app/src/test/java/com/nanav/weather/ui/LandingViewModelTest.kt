@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.nanav.weather.BuildConfig
 import com.nanav.weather.data.managers.contract.DataManager
 import com.nanav.weather.data.model.MockWeather
-import com.nanav.weather.ui.landing.LandingDataState
+import com.nanav.weather.ui.landing.LandingFlowState
 import com.nanav.weather.ui.landing.LandingViewModel
 import com.nanav.weather.util.RxSchedulersOverrideRule
 import io.reactivex.Single
@@ -40,7 +40,7 @@ class LandingViewModelTest {
     private val throwable: Throwable = Throwable("Something went wrong loading data")
 
     @Mock
-    lateinit var dataObserver: Observer<LandingDataState>
+    lateinit var flowObserver: Observer<LandingFlowState>
 
     private val SEARCH_INPUT_1 = "madrid"
 
@@ -51,14 +51,14 @@ class LandingViewModelTest {
         `when`(dataManager.getWeather(SEARCH_INPUT_1))
             .thenReturn(Single.just(MockWeather.WEATHER_MAD))
 
-        landingViewModel = LandingViewModel(dataManager)
+        landingViewModel = LandingViewModel()
     }
 
     @Test
     fun `test 1 Data Load`() {
         //GIVEN
-        val argumentCaptor = ArgumentCaptor.forClass(LandingDataState::class.java)
-        landingViewModel.landingDataState.observeForever(dataObserver)
+        val argumentCaptor = ArgumentCaptor.forClass(LandingFlowState::class.java)
+        landingViewModel.landingFlowState.observeForever(flowObserver)
 
         //WHEN
         `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.just(MockWeather.WEATHER_MAD))
@@ -68,25 +68,25 @@ class LandingViewModelTest {
         //THEN
 
         argumentCaptor.run {
-            verify(dataObserver, times(2)).onChanged(argumentCaptor.capture())
+            verify(flowObserver, times(2)).onChanged(argumentCaptor.capture())
         }
 
         val values = argumentCaptor.allValues
 
         assertEquals(2, values.size)
-        assertEquals(LandingDataState.LandingDataLoading::class.java, values[0]::class.java)
-        assertEquals(LandingDataState.LandingData::class.java, values[1]::class.java)
+        assertEquals(LandingFlowState.LandingFlowLoading::class.java, values[0]::class.java)
+        assertEquals(LandingFlowState.LandingFlow::class.java, values[1]::class.java)
         assertEquals(
             MockWeather.WEATHER_MAD,
-            (values[1] as LandingDataState.LandingData).weather
+            (values[1] as LandingFlowState.LandingFlow).weather
         )
     }
 
     @Test
     fun `test 2 Error Load`() {
         //GIVEN
-        val argumentCaptor = ArgumentCaptor.forClass(LandingDataState::class.java)
-        landingViewModel.landingDataState.observeForever(dataObserver)
+        val argumentCaptor = ArgumentCaptor.forClass(LandingFlowState::class.java)
+        landingViewModel.landingFlowState.observeForever(flowObserver)
 
         //WHEN
         `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.error(throwable))
@@ -96,13 +96,13 @@ class LandingViewModelTest {
         //THEN
 
         argumentCaptor.run {
-            verify(dataObserver, times(2)).onChanged(argumentCaptor.capture())
+            verify(flowObserver, times(2)).onChanged(argumentCaptor.capture())
         }
 
         val values = argumentCaptor.allValues
 
         assertEquals(2, values.size)
-        assertEquals(LandingDataState.LandingDataLoading::class.java, values[0]::class.java)
-        assertEquals(LandingDataState.LandingDataError::class.java, values[1]::class.java)
+        assertEquals(LandingFlowState.LandingFlowLoading::class.java, values[0]::class.java)
+        assertEquals(LandingFlowState.LandingFlowError::class.java, values[1]::class.java)
     }
 }

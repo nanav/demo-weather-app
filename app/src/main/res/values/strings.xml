@@ -4,10 +4,14 @@
     <!-- Landing -->
     <string name="landing_search">Search</string>
     <string name="landing_input_hint">enter city name</string>
-    <string name="landing_city_title">City:</string>
-    <string name="landing_temp_title">Temperature:</string>
-    <string name="landing_hum_title">Humidity:</string>
-    <string name="landing_temp_value" formatted="false">%.1f°C (feels like %.1f°C)</string>
-    <string name="landing_hum_value">%d %%</string>
     <string name="landing_title">Search any city\'s weather below</string>
+    <string name="landing_search_error">search term too short(min 3 char)</string>
+
+    <!-- Weather detail -->
+    <string name="weather_detail_city_title">City:</string>
+    <string name="weather_detail_temp_title">Temperature:</string>
+    <string name="weather_detail_hum_title">Humidity:</string>
+    <string name="weather_detail_temp_value" formatted="false">%.1f°C (feels like %.1f°C)</string>
+    <string name="weather_detail_hum_value">%d %%</string>
+    <string name="weather_search_not_found">city not found</string>
 </resources>

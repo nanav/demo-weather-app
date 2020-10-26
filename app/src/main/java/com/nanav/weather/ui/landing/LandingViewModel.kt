@@ -1,32 +1,21 @@
 package com.nanav.weather.ui.landing
 
 import androidx.lifecycle.MutableLiveData
+import com.nanav.weather.R
 import com.nanav.weather.arch.BaseViewModel
-import com.nanav.weather.data.managers.contract.DataManager
-import com.nanav.weather.ext.rx.applyIoSchedulers
-import com.nanav.weather.ui.landing.LandingDataState.*
-import io.reactivex.rxkotlin.addTo
-import timber.log.Timber
+import com.nanav.weather.ui.landing.LandingFlowState.*
 
-class LandingViewModel constructor(private val dataManager: DataManager) : BaseViewModel(),
-    LandingMvvm.ViewModel {
+class LandingViewModel : BaseViewModel(), LandingMvvm.ViewModel {
 
-    val landingDataState = MutableLiveData<LandingDataState>()
+    val landingFlowState = MutableLiveData<LandingFlowState>()
 
     override fun search(inputCity: String) {
-        landingDataState.value = LandingDataLoading
+        landingFlowState.value = LandingFlowLoading
 
-        dataManager.getWeather(inputCity)
-            .applyIoSchedulers()
-            .subscribe({
-                landingDataState.value = LandingData(it)
-            }, {
-                Timber.e(it)
-                landingDataState.value = LandingDataError(
-                    it.message
-                        ?: it.javaClass.simpleName
-                )
-            }).addTo(subscription)
-
+        if (inputCity.length > 3) {
+            landingFlowState.value = LandingFlowStartSearch(inputCity)
+        } else {
+            landingFlowState.value = LandingFlowError(R.string.landing_search_error)
+        }
     }
 }

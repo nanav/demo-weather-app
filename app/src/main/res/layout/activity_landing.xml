@@ -36,81 +36,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/landing_title" />
 
-    <TextView
-        android:id="@+id/landing_city_title"
-        style="@style/Landing.Field"
+    <Button
+        android:id="@+id/landing_search_btn"
+        style="@style/Landing.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/landing_city_title"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/landing_city"
-        style="@style/Landing.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/landing_city_title"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Madrid" />
-
-    <TextView
-        android:id="@+id/landing_temp_title"
-        style="@style/Landing.Field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/landing_temp_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landing_city_title" />
-
-    <TextView
-        android:id="@+id/landing_temp"
-        style="@style/Landing.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/landing_temp_title"
-        app:layout_constraintTop_toBottomOf="@id/landing_city_title"
-        tools:text="12" />
-
-    <TextView
-        android:id="@+id/landing_hum_title"
-        style="@style/Landing.Field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/landing_hum_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landing_temp_title" />
-
-    <TextView
-        android:id="@+id/landing_humidity"
-        style="@style/Landing.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/landing_hum_title"
-        app:layout_constraintTop_toBottomOf="@id/landing_temp_title"
-        tools:text="20%" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/landing_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:constraint_referenced_ids="landing_city_title, landing_city, landing_temp_title,landing_temp,landing_hum_title,landing_humidity" />
-
-    <TextView
-        android:id="@+id/landing_error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/landing_input"
+        android:text="@string/landing_search"/>
 
     <ProgressBar
         android:id="@+id/landing_progress"

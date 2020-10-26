@@ -3,13 +3,12 @@ package com.nanav.weather.ui.landing
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.annotation.StringRes
+import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
-import com.nanav.weather.R
 import com.nanav.weather.arch.BaseMvvmActivity
-import com.nanav.weather.data.model.Weather
 import com.nanav.weather.databinding.ActivityLandingBinding
-import com.nanav.weather.ext.android.hideKeyboard
-import com.nanav.weather.ext.rx.toCelsius
+import com.nanav.weather.ui.detail.WeatherDetailActivity
 
 class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBinding>(
     LandingViewModel::class,
@@ -19,7 +18,7 @@ class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBindin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.landingDataState.observe { processDataState(it) }
+        viewModel.landingFlowState.observe { processDataState(it) }
 
         RxTextView.editorActions(layout.landingInput)
             .subscribe {
@@ -27,42 +26,36 @@ class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBindin
                     viewModel.search(layout.landingInput.text.toString())
                 }
             }.disposeOnDestroy()
+
+        RxView.clicks(layout.landingSearchBtn).subscribe {
+            viewModel.search(layout.landingInput.text.toString())
+        }.disposeOnDestroy()
+
     }
 
-    private fun processDataState(landingDataState: LandingDataState) {
-        when (landingDataState) {
-            LandingDataState.LandingDataLoading -> showProgress(true)
-            is LandingDataState.LandingDataError -> showMessage(landingDataState.errorMessage)
-            is LandingDataState.LandingData -> setData(landingDataState.weather)
-        }
-    }
-
-    private fun setData(weather: Weather) {
-        hideKeyboard()
-
+    override fun onResume() {
+        super.onResume()
         showProgress(false)
+    }
 
-        layout.landingCity.text = weather.city
-        layout.landingHumidity.text = String.format(
-            getString(R.string.landing_hum_value),
-            weather.weatherMain.humidity.toInt()
-        )
-        layout.landingTemp.text = String.format(
-            getString(R.string.landing_temp_value),
-            weather.weatherMain.temp.toCelsius(),
-            weather.weatherMain.feelsLike.toCelsius()
-        )
+    private fun processDataState(landingFlowState: LandingFlowState) {
+        when (landingFlowState) {
+            LandingFlowState.LandingFlowLoading -> showProgress(true)
+            is LandingFlowState.LandingFlowError -> showError(landingFlowState.errorMessage)
+            is LandingFlowState.LandingFlowStartSearch -> startSearch(landingFlowState.search)
+        }
     }
 
     private fun showProgress(isLoading: Boolean) {
         layout.landingProgress.visibility = if (isLoading) View.VISIBLE else View.GONE
-        layout.landingInfo.visibility = if (isLoading) View.INVISIBLE else View.VISIBLE
-        layout.landingError.visibility = View.GONE
     }
 
-    private fun showMessage(message: String) {
-        layout.landingInfo.visibility = View.GONE
-        layout.landingError.visibility = View.VISIBLE
-        layout.landingError.text = message
+    private fun showError(@StringRes errorMsg: Int) {
+        showProgress(false)
+        layout.landingInput.error = getString(errorMsg)
+    }
+
+    private fun startSearch(search: String) {
+        WeatherDetailActivity.start(this, search)
     }
 }
