@@ -11,6 +11,7 @@ object MockWeather {
             20.1f,
             122.5f,
             100.4f
-        )
+        ),
+        emptyList()
     )
 }

@@ -48,7 +48,7 @@ class DataManagerTest {
     }
 
     @Test
-    fun `test Get Character Success`() {
+    fun `test Get Data Success`() {
         val testObserver = TestObserver<Weather>()
 
         dataManager.getWeather(SEARCH_INPUT_1).subscribe(testObserver)
