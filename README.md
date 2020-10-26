@@ -1,9 +1,12 @@
 # demo-weather-app
 This project contains a demo implementation fetching data from [https://openweathermap.org/api](https://openweathermap.org/api)
 
-This app contains 1 screen:
-- Landing screen
+This app contains 2 screens:
+- Landing screen: Search input box(actionable by button and by 'done'). Min search lenght is 3.
 <img src="screenshots/device-landing.png" width="200">
+
+-Result screen: Error handling implemented
+<img src="screenshots/device-detail.png" width="200">
 
 **Test Coverage:** ViewModels, DataManager
 
