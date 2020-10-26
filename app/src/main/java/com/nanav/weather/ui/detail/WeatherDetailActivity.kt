@@ -5,13 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.nanav.weather.R
 import com.nanav.weather.arch.BaseMvvmActivity
 import com.nanav.weather.data.model.Weather
+import com.nanav.weather.data.model.WeatherItem
 import com.nanav.weather.databinding.ActivityWeatherDetailBinding
+import com.nanav.weather.databinding.ElementWeatherBinding
 import com.nanav.weather.ext.android.extra
 import com.nanav.weather.ext.android.hideKeyboard
 import com.nanav.weather.ext.rx.toCelsius
+import com.nanav.weather.ui.SimpleAdapter
 
 class WeatherDetailActivity :
     BaseMvvmActivity<WeatherDetailViewModel, ActivityWeatherDetailBinding>(
@@ -21,10 +26,21 @@ class WeatherDetailActivity :
 
     private val searchTerm by extra<String>(ARG_SEARCH)
 
+    private val weatherAdapter by lazy {
+        SimpleAdapter(
+            ElementWeatherBinding::inflate,
+            this::bindAdapterView
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel.weatherDetailDataState.observe { processDataState(it) }
+
+        layout.weatherItemList.adapter = weatherAdapter
+        layout.weatherItemList.layoutManager = LinearLayoutManager(this)
+        layout.weatherItemList.itemAnimator = DefaultItemAnimator()
 
         viewModel.search(searchTerm)
     }
@@ -52,7 +68,19 @@ class WeatherDetailActivity :
             weather.weatherMain.temp.toCelsius(),
             weather.weatherMain.feelsLike.toCelsius()
         )
+
+        weatherAdapter.addItems(weather.weatherItems)
     }
+
+    private fun bindAdapterView(
+        holder: SimpleAdapter<WeatherItem, ElementWeatherBinding>.SimpleViewHolder,
+        weatherItem: WeatherItem
+    ) {
+        holder.layout.weatherMain.text =
+            String.format(getString(R.string.weather_detail_field_title, weatherItem.main))
+        holder.layout.weatherDesc.text = weatherItem.description
+    }
+
 
     private fun showProgress(isLoading: Boolean) {
         layout.weatherProgress.visibility = if (isLoading) View.VISIBLE else View.GONE

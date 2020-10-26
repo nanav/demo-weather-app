@@ -27,9 +27,10 @@
         <TextView
             android:id="@+id/weather_city"
             style="@style/Detail.Field.Value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/weather_city_title"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Madrid" />
@@ -42,15 +43,16 @@
             android:layout_marginStart="@dimen/margin_large"
             android:text="@string/weather_detail_temp_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weather_city_title" />
+            app:layout_constraintTop_toBottomOf="@id/weather_city" />
 
         <TextView
             android:id="@+id/weather_temp"
             style="@style/Detail.Field.Value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/weather_temp_title"
-            app:layout_constraintTop_toBottomOf="@id/weather_city_title"
+            app:layout_constraintTop_toBottomOf="@id/weather_city"
             tools:text="12" />
 
         <TextView
@@ -61,23 +63,36 @@
             android:layout_marginStart="@dimen/margin_large"
             android:text="@string/weather_detail_hum_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/weather_temp_title" />
+            app:layout_constraintTop_toBottomOf="@id/weather_temp" />
 
         <TextView
             android:id="@+id/weather_humidity"
             style="@style/Detail.Field.Value"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/weather_hum_title"
-            app:layout_constraintTop_toBottomOf="@id/weather_temp_title"
+            app:layout_constraintTop_toBottomOf="@id/weather_temp"
             tools:text="20%" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/weather_item_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_large"
+            android:clipToPadding="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/weather_hum_title"
+            app:layout_constraintTop_toBottomOf="@id/weather_humidity"
+            tools:listitem="@layout/element_weather" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/weather_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="weather_city_title, weather_city, weather_temp_title,weather_temp,weather_hum_title,weather_humidity" />
+            app:constraint_referenced_ids="weather_city_title, weather_city, weather_temp_title,weather_temp,weather_hum_title,weather_humidity, weather_item_list"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/weather_error"

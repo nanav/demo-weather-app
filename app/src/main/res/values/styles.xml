@@ -21,7 +21,7 @@
         <item name="android:textAllCaps">true</item>
     </style>
 
-    <style name="Detail"/>
+    <style name="Detail" />
 
     <style name="Detail.Field" parent="Detail">
         <item name="android:textSize">@dimen/text_medium</item>
@@ -32,8 +32,10 @@
     <style name="Detail.Field.Value" parent="Detail.Field">
         <item name="android:textStyle">normal</item>
         <item name="android:paddingStart">@dimen/padding_medium</item>
+        <item name="android:paddingEnd">@dimen/padding_medium</item>
         <item name="android:textAllCaps">false</item>
     </style>
+
     <style name="Detail.Error" parent="Detail">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/color_accent</item>

@@ -7,7 +7,9 @@ data class Weather(
     val city: String,
     val id: Int,
     @SerializedName(value = "main")
-    val weatherMain: WeatherMain
+    val weatherMain: WeatherMain,
+    @SerializedName(value = "weather")
+    val weatherItems: List<WeatherItem>
 )
 
 data class WeatherMain(
@@ -18,4 +20,9 @@ data class WeatherMain(
     val tempMax: Float,
     val pressure: Float,
     val humidity: Float
+)
+
+data class WeatherItem(
+    val main: String,
+    val description: String
 )

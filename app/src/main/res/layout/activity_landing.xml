@@ -11,12 +11,13 @@
     <TextView
         android:id="@+id/landing_title"
         style="@style/Landing.Title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_huge"
         android:layout_marginEnd="@dimen/margin_large"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/landing_title"/>
 
@@ -34,6 +35,7 @@
         android:minHeight="@dimen/search_bar_height"
         android:padding="@dimen/padding_medium"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/landing_title" />
 
     <Button

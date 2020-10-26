@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Weather App</string>
 
     <!-- Landing -->
@@ -13,5 +13,6 @@
     <string name="weather_detail_hum_title">Humidity:</string>
     <string name="weather_detail_temp_value" formatted="false">%.1f°C (feels like %.1f°C)</string>
     <string name="weather_detail_hum_value">%d %%</string>
+    <string name="weather_detail_field_title">%s: </string>
     <string name="weather_search_not_found">city not found</string>
 </resources>
