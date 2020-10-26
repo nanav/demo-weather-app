@@ -1,97 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/window_background"
+    android:fillViewport="true"
     tools:context=".ui.detail.WeatherDetailActivity">
 
-    <TextView
-        android:id="@+id/weather_city_title"
-        style="@style/Detail.Field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/weather_detail_city_title"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/weather_city"
-        style="@style/Detail.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/weather_city_title"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Madrid" />
-
-    <TextView
-        android:id="@+id/weather_temp_title"
-        style="@style/Detail.Field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/weather_detail_temp_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weather_city_title" />
-
-    <TextView
-        android:id="@+id/weather_temp"
-        style="@style/Detail.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/weather_temp_title"
-        app:layout_constraintTop_toBottomOf="@id/weather_city_title"
-        tools:text="12" />
-
-    <TextView
-        android:id="@+id/weather_hum_title"
-        style="@style/Detail.Field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:text="@string/weather_detail_hum_title"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weather_temp_title" />
-
-    <TextView
-        android:id="@+id/weather_humidity"
-        style="@style/Detail.Field.Value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/weather_hum_title"
-        app:layout_constraintTop_toBottomOf="@id/weather_temp_title"
-        tools:text="20%" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/weather_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="weather_city_title, weather_city, weather_temp_title,weather_temp,weather_hum_title,weather_humidity" />
-
-    <TextView
-        android:id="@+id/weather_error"
-        style="@style/Detail.Error"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/padding_small"
-        android:paddingEnd="@dimen/padding_small"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/weather_progress"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/weather_city_title"
+            style="@style/Detail.Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:text="@string/weather_detail_city_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/weather_city"
+            style="@style/Detail.Field.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/weather_city_title"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Madrid" />
+
+        <TextView
+            android:id="@+id/weather_temp_title"
+            style="@style/Detail.Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:text="@string/weather_detail_temp_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_city_title" />
+
+        <TextView
+            android:id="@+id/weather_temp"
+            style="@style/Detail.Field.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/weather_temp_title"
+            app:layout_constraintTop_toBottomOf="@id/weather_city_title"
+            tools:text="12" />
+
+        <TextView
+            android:id="@+id/weather_hum_title"
+            style="@style/Detail.Field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:text="@string/weather_detail_hum_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/weather_temp_title" />
+
+        <TextView
+            android:id="@+id/weather_humidity"
+            style="@style/Detail.Field.Value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/weather_hum_title"
+            app:layout_constraintTop_toBottomOf="@id/weather_temp_title"
+            tools:text="20%" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/weather_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="weather_city_title, weather_city, weather_temp_title,weather_temp,weather_hum_title,weather_humidity" />
+
+        <TextView
+            android:id="@+id/weather_error"
+            style="@style/Detail.Error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/weather_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
