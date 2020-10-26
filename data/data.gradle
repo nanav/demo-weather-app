@@ -33,7 +33,7 @@ android {
         standard {
             dimension defaultDimen
             buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/\""
-            buildConfigField "String", "API_KEY", "\"828971f619b9ba9b1632c23dff01bec5\""
+            buildConfigField "String", "API_KEY", "\"////---APIKEY----///\""
             buildConfigField "String", "API_VERSION", "\"2.5\""
         }
     }
