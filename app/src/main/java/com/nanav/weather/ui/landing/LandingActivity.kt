@@ -8,6 +8,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.nanav.weather.arch.BaseMvvmActivity
 import com.nanav.weather.databinding.ActivityLandingBinding
+import com.nanav.weather.ext.android.hideKeyboard
 import com.nanav.weather.ui.detail.WeatherDetailActivity
 
 class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBinding>(
@@ -23,14 +24,16 @@ class LandingActivity : BaseMvvmActivity<LandingViewModel, ActivityLandingBindin
         RxTextView.editorActions(layout.landingInput)
             .subscribe {
                 if (it == EditorInfo.IME_ACTION_DONE) {
-                    viewModel.search(layout.landingInput.text.toString())
+                    onSearchAction()
                 }
             }.disposeOnDestroy()
 
-        RxView.clicks(layout.landingSearchBtn).subscribe {
-            viewModel.search(layout.landingInput.text.toString())
-        }.disposeOnDestroy()
+        RxView.clicks(layout.landingSearchBtn).subscribe { onSearchAction() }.disposeOnDestroy()
+    }
 
+    private fun onSearchAction() {
+        hideKeyboard()
+        viewModel.search(layout.landingInput.text.toString())
     }
 
     override fun onResume() {
