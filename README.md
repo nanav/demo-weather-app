@@ -78,3 +78,7 @@ val DatabaseModule = module {
 6- Handle connectivy issues by detecting connection changes - see an example of it in any of my projects like https://github.com/nanav/marvel-test
 
 7- Add UI tests with espresso - see an example of it in any of my projects like https://github.com/nanav/marvel-test
+
+### Notes
+
+Make sure you have an API KEY before running this app and update data.gradle
