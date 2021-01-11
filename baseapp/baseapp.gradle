@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -11,8 +10,6 @@ android {
         targetSdkVersion(targetSdk)
     }
 
-    viewBinding.enabled = true
-
     compileOptions {
         sourceCompatibility(jvmCompileTarget)
         targetCompatibility(jvmCompileTarget)
@@ -20,6 +17,10 @@ android {
 
     kotlinOptions {
         jvmTarget = jvmCompileTarget
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {

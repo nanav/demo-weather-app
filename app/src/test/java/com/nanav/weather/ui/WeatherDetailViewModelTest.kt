@@ -8,9 +8,9 @@ import com.nanav.weather.data.managers.contract.DataManager
 import com.nanav.weather.data.model.MockWeather
 import com.nanav.weather.ui.detail.WeatherDataState
 import com.nanav.weather.ui.detail.WeatherDetailViewModel
-import com.nanav.weather.util.RxSchedulersOverrideRule
-import io.reactivex.Single
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Rule
@@ -24,20 +24,22 @@ import org.mockito.MockitoAnnotations
 import org.robolectric.annotation.Config
 
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @Config(sdk = [BuildConfig.TEST_VERSION])
 class WeatherDetailViewModelTest {
-    @Rule
-    @JvmField
-    var scheduleOverride = RxSchedulersOverrideRule()
+
+    @get: Rule
+    val coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
     lateinit var dataManager: DataManager
 
     private lateinit var weatherDetailViewModel: WeatherDetailViewModel
 
-    private val throwable: Throwable = Throwable("Something went wrong loading data")
+    @Mock
+    lateinit var runtimeException: RuntimeException
 
     @Mock
     lateinit var flowObserver: Observer<WeatherDataState>
@@ -48,20 +50,21 @@ class WeatherDetailViewModelTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
 
-        `when`(dataManager.getWeather(SEARCH_INPUT_1))
-            .thenReturn(Single.just(MockWeather.WEATHER_MAD))
-
+        coroutinesTestRule.testDispatcher.runBlockingTest {
+            `when`(dataManager.getWeather(SEARCH_INPUT_1))
+                .thenReturn(MockWeather.WEATHER_MAD)
+        }
         weatherDetailViewModel = WeatherDetailViewModel(dataManager)
     }
 
     @Test
-    fun `test 1 Data Load`() {
+    fun `test 1 Data Load`() = coroutinesTestRule.testDispatcher.runBlockingTest {
         //GIVEN
         val argumentCaptor = ArgumentCaptor.forClass(WeatherDataState::class.java)
         weatherDetailViewModel.weatherDetailDataState.observeForever(flowObserver)
 
         //WHEN
-        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.just(MockWeather.WEATHER_MAD))
+        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(MockWeather.WEATHER_MAD)
 
         weatherDetailViewModel.search(SEARCH_INPUT_1)
 
@@ -83,13 +86,13 @@ class WeatherDetailViewModelTest {
     }
 
     @Test
-    fun `test 2 Error Load`() {
+    fun `test 2 Error Load`() = coroutinesTestRule.testDispatcher.runBlockingTest {
         //GIVEN
         val argumentCaptor = ArgumentCaptor.forClass(WeatherDataState::class.java)
         weatherDetailViewModel.weatherDetailDataState.observeForever(flowObserver)
 
         //WHEN
-        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenReturn(Single.error(throwable))
+        `when`(dataManager.getWeather(SEARCH_INPUT_1)).thenThrow(runtimeException)
 
         weatherDetailViewModel.search(SEARCH_INPUT_1)
 

@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -11,8 +10,6 @@ android {
         targetSdkVersion(targetSdk)
     }
 
-    viewBinding.enabled = true
-
     compileOptions {
         sourceCompatibility(jvmCompileTarget)
         targetCompatibility(jvmCompileTarget)
@@ -20,6 +17,10 @@ android {
 
     kotlinOptions {
         jvmTarget = jvmCompileTarget
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -33,7 +34,7 @@ android {
         standard {
             dimension defaultDimen
             buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/\""
-            buildConfigField "String", "API_KEY", "\"////---APIKEY----///\""
+            buildConfigField "String", "API_KEY", "\"828971f619b9ba9b1632c23dff01bec5\""
             buildConfigField "String", "API_VERSION", "\"2.5\""
         }
     }
@@ -41,6 +42,8 @@ android {
 
 internalLib(okhttp)
 internalLib(retrofit)
+internalLib(lifecycle)
+
 exposedLib(kotlin)
 exposedLib(rxjava)
 exposedLib(recyclerview)
