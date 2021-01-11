@@ -3,20 +3,20 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion(compileSdk)
+    compileSdkVersion(rootProject.ext.compileSdk)
 
     defaultConfig {
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
+        minSdkVersion(rootProject.ext.minSdk)
+        targetSdkVersion(rootProject.ext.targetSdk)
     }
 
     compileOptions {
-        sourceCompatibility(jvmCompileTarget)
-        targetCompatibility(jvmCompileTarget)
+        sourceCompatibility(rootProject.ext.jvmCompileTarget)
+        targetCompatibility(rootProject.ext.jvmCompileTarget)
     }
 
     kotlinOptions {
-        jvmTarget = jvmCompileTarget
+        jvmTarget = rootProject.ext.jvmCompileTarget
     }
 
     buildFeatures {
@@ -28,7 +28,7 @@ android {
         release {}
     }
 
-    flavorDimensions defaultDimen
+    flavorDimensions rootProject.ext.defaultDimen
 
     productFlavors {
         standard {

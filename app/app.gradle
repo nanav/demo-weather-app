@@ -7,12 +7,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion(compileSdk)
+    compileSdkVersion(rootProject.ext.compileSdk)
 
     defaultConfig {
         applicationId "com.nanav.weather"
-        minSdkVersion(minSdk)
-        targetSdkVersion(targetSdk)
+        minSdkVersion(rootProject.ext.minSdk)
+        targetSdkVersion(rootProject.ext.targetSdk)
 
         versionName "0.0.1"
         manifestPlaceholders = [appName: "DemoWeather"]
@@ -36,12 +36,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility(jvmCompileTarget)
-        targetCompatibility(jvmCompileTarget)
+        sourceCompatibility(rootProject.ext.jvmCompileTarget)
+        targetCompatibility(rootProject.ext.jvmCompileTarget)
     }
 
     kotlinOptions {
-        jvmTarget = jvmCompileTarget
+        jvmTarget = rootProject.ext.jvmCompileTarget
     }
 
     buildFeatures {
@@ -78,11 +78,11 @@ android {
         }
     }
 
-    flavorDimensions defaultDimen
+    flavorDimensions rootProject.ext.defaultDimen
 
     productFlavors {
         standard {
-            dimension defaultDimen
+            dimension rootProject.ext.defaultDimen
         }
     }
 
