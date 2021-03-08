@@ -7,6 +7,7 @@ import com.nanav.weather.BuildConfig
 import com.nanav.weather.ui.landing.LandingFlowState
 import com.nanav.weather.ui.landing.LandingViewModel
 import junit.framework.TestCase.assertEquals
+import org.junit.After
 import org.junit.Before
 import org.junit.FixMethodOrder
 import org.junit.Test
@@ -33,9 +34,11 @@ class LandingViewModelTest {
     private val SEARCH_INPUT_1 = "madrid"
     private val SEARCH_INPUT_2 = "ma"
 
+    private lateinit var closeable: AutoCloseable
+
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        closeable = MockitoAnnotations.openMocks(this)
 
         landingViewModel = LandingViewModel()
     }
@@ -86,5 +89,10 @@ class LandingViewModelTest {
         assertEquals(2, values.size)
         assertEquals(LandingFlowState.LandingFlowLoading::class.java, values[0]::class.java)
         assertEquals(LandingFlowState.LandingFlowError::class.java, values[1]::class.java)
+    }
+
+    @After
+    fun closeDown() {
+        closeable.close()
     }
 }

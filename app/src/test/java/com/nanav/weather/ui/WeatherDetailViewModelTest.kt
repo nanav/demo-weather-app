@@ -11,10 +11,7 @@ import com.nanav.weather.ui.detail.WeatherDetailViewModel
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
-import org.junit.FixMethodOrder
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import org.mockito.ArgumentCaptor
@@ -46,9 +43,12 @@ class WeatherDetailViewModelTest {
 
     private val SEARCH_INPUT_1 = "madrid"
 
+    private lateinit var closeable: AutoCloseable
+
+
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        closeable = MockitoAnnotations.openMocks(this)
 
         coroutinesTestRule.testDispatcher.runBlockingTest {
             `when`(dataManager.getWeather(SEARCH_INPUT_1))
@@ -107,5 +107,10 @@ class WeatherDetailViewModelTest {
         assertEquals(2, values.size)
         assertEquals(WeatherDataState.WeatherDataLoading::class.java, values[0]::class.java)
         assertEquals(WeatherDataState.WeatherDataError::class.java, values[1]::class.java)
+    }
+
+    @After
+    fun closeDown() {
+        closeable.close()
     }
 }
